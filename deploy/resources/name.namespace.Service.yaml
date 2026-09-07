@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: rag-manager
+  name: data-source-manager
+  namespace: rag-manager
+spec:
+  type: ClusterIP
+  selector:
+    app: rag-manager
+  ports:
+    - name: api
+      port: 8000
+      protocol: TCP
+      targetPort: api

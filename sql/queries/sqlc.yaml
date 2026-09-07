@@ -1,0 +1,33 @@
+---
+version: "2"
+
+x-base-config: &config
+  engine: "postgresql"
+  schema: "../migrations"
+
+x-gen-config: &gen-config
+  sql_package: "pgx/v5"
+  omit_unused_structs: true
+  emit_exported_queries: true
+  output_db_file_name: db.sql.go
+  output_models_file_name: models.sql.go
+  overrides:
+    - db_type: "timestamptz"
+      go_type:
+        import: "time"
+        type: "Type"
+    - db_type: "bool"
+      go_type:
+        type: "bool"
+    - db_type: "uuid"
+      go_type:
+        import: "github.com/google/uuid"
+        type: "UUID"
+
+sql:
+  - <<: *config
+    queries: "entities"
+    gen:
+      go:
+        <<: *gen-config
+        out: "../../internal/repo/entity/sqlc"

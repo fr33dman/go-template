@@ -1,0 +1,48 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app: rag-manager
+  name: data-source-manager-migrate
+  namespace: rag-manager
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: rag-manager
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: migrate
+          image: docker.io/fr33dman/thragg-datasource-manager:v0.0.1
+          imagePullPolicy: Never
+          command:
+            - /app/data-source-manager-migrate
+          env:
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: rag-manager-db-app
+                  key: port
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: rag-manager-db-app
+                  key: host
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: rag-manager-db-app
+                  key: dbname
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: rag-manager-db-app
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rag-manager-db-app
+                  key: password
