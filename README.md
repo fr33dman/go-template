@@ -156,3 +156,19 @@ The migration binary is started by `cmd/migrate`.
 The application handles `SIGINT` and `SIGTERM`, gracefully shuts down API and probes servers, and closes the PostgreSQL pool.
 
 Logs are emitted as JSON and include the application version.
+
+## Kubernetes
+
+Kubernetes manifests are under `deploy/` and use the `go-template` namespace.
+Before applying them, provide a `go-template-postgres` Secret in that
+namespace with the keys `host`, `port`, `database`, `username`, and `password`.
+
+The manifests use `docker.io/fr33dman/go-template:latest` as the template
+image. Override it in an application overlay or update the `images` section in
+`deploy/kustomization.yaml` for the concrete Docker Hub repository and tag.
+
+Apply the base manifests with:
+
+```sh
+kubectl apply -k deploy/
+```

@@ -137,6 +137,13 @@ the `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN` repository secrets.
 The workflows use `go-runners` and `buildah-runners` as runner labels. These
 labels are expected to be provided by separate ARC runner scale sets.
 
+## Kubernetes Manifests
+
+The base manifests in `deploy/` use the `go-template` namespace and expect a
+`go-template-postgres` Secret with `host`, `port`, `database`, `username`, and
+`password` keys. Update the image through a Kustomize overlay or the
+`images` section in `deploy/kustomization.yaml` for a concrete application.
+
 ## Probes
 
 Probe state is created in `internal/app/container.go` and passed explicitly to the probes server and heartbeat loop.
