@@ -28,7 +28,7 @@ jobs:
   build:
     needs: [test, lint]
     runs-on: k8s-runners
-    container: buildah/stable:v1.39.3
+    container: quay.io/buildah/stable:v1.39.3
     steps:
       - name: Check out source
         uses: actions/checkout@v4
