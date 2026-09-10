@@ -46,5 +46,4 @@ jobs:
             --opt filename=Dockerfile \
             --opt build-arg:VERSION="${GITHUB_SHA}" \
             --opt build-arg:COMMIT_HASH="${GITHUB_SHA}" \
-            --opt build-arg:DATETIME="$(date -u +%FT%TZ)" \
-            --output type=cacheonly
+            --opt build-arg:DATETIME="$(date -u +%FT%TZ)"
