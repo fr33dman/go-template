@@ -20,7 +20,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: go-template
-          image: docker.io/fr33dman/go-template:latest
+          image: application-image
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false

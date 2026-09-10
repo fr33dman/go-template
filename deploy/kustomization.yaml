@@ -8,6 +8,6 @@ resources:
   - ./resources/go-template.go-template.Service.yaml
 
 images:
-  - name: docker.io/fr33dman/go-template
+  - name: application-image
     newName: docker.io/fr33dman/go-template
     newTag: latest
