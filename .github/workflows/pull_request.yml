@@ -18,7 +18,7 @@ jobs:
 
   lint:
     runs-on: k8s-runners
-    container: golangci/golangci-lint:v2.1.6
+    container: golangci/golangci-lint:v2.13.2
     steps:
       - name: Check out source
         uses: actions/checkout@v4
