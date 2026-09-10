@@ -14,7 +14,7 @@ env:
 
 jobs:
   build:
-    runs-on: buildah-runners
+    runs-on: k8s-runners
     container: buildah/stable:v1.39.3
     steps:
       - name: Check out source
@@ -30,7 +30,7 @@ jobs:
 
   publish:
     needs: build
-    runs-on: buildah-runners
+    runs-on: k8s-runners
     container: buildah/stable:v1.39.3
     steps:
       - name: Check out source

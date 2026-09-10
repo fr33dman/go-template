@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   test:
-    runs-on: go-runners
+    runs-on: k8s-runners
     container: golang:1.27.0-bookworm
     steps:
       - name: Check out source
@@ -17,7 +17,7 @@ jobs:
         run: go test ./...
 
   lint:
-    runs-on: go-runners
+    runs-on: k8s-runners
     container: golangci/golangci-lint:v2.1.6
     steps:
       - name: Check out source
@@ -27,7 +27,7 @@ jobs:
 
   build:
     needs: [test, lint]
-    runs-on: buildah-runners
+    runs-on: k8s-runners
     container: buildah/stable:v1.39.3
     steps:
       - name: Check out source
