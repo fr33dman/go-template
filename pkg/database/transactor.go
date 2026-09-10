@@ -4,12 +4,17 @@ import (
 	"context"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
-
-	sqlcrepo "github.com/fr33dman/go-template/internal/repo/entity/sqlc"
 )
 
 type txContextKey struct{}
+
+type Queryer interface {
+	Exec(context.Context, string, ...interface{}) (pgconn.CommandTag, error)
+	Query(context.Context, string, ...interface{}) (pgx.Rows, error)
+	QueryRow(context.Context, string, ...interface{}) pgx.Row
+}
 
 type Transactor struct {
 	pool *pgxpool.Pool
@@ -36,7 +41,7 @@ func (t *Transactor) WithinTx(ctx context.Context, fn func(ctx context.Context) 
 	return tx.Commit(ctx)
 }
 
-func DBTX(ctx context.Context, fallback sqlcrepo.DBTX) sqlcrepo.DBTX {
+func DBTX(ctx context.Context, fallback Queryer) Queryer {
 	if tx, ok := Tx(ctx); ok {
 		return tx
 	}
