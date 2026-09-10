@@ -28,10 +28,19 @@ jobs:
   build:
     needs: [test, lint]
     runs-on: k8s-runners
-    container: quay.io/buildah/stable:v1.39.3
+
+    container:
+      image: quay.io/buildah/stable:v1.39.3
+
+    env:
+      STORAGE_DRIVER: vfs
+      BUILDAH_FORMAT: docker
+      BUILDAH_ISOLATION: chroot
+
     steps:
       - name: Check out source
         uses: actions/checkout@v4
+
       - name: Build container image
         run: |
           buildah bud \
